@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<template
+        format="5"
+        revision="6"
+        name="RecyclerView Activity"
+        minApi="13"
+        minBuildApi="14"
+        requireAppTheme="true"
+        description="Creates a new blank activity, with an action bar and recyclerview adapter">
+
+    <category value="Activity"/>
+    <formfactor value="Mobile"/>
+
+    <parameter
+            id="activityClass"
+            name="Activity Name"
+            type="string"
+            constraints="class|unique|nonempty"
+            suggest="${layoutToActivity(layoutName)}"
+            default="MainActivity"
+            help="The name of the activity class to create"/>
+
+
+    <parameter
+            id="layoutName"
+            name="Layout Name"
+            type="string"
+            constraints="layout|unique|nonempty"
+            suggest="${activityToLayout(activityClass)}"
+            default="activity_main"
+            help="The name of the layout to create for the activity"/>
+
+    <parameter
+            id="adapterClass"
+            name="Adapter Name"
+            type="string"
+            constraints="class|unique|nonempty"
+            default="MainAdapter"
+            help="The name of the adapter class to create"/>
+
+    <parameter
+            id="itemLayoutName"
+            name="Layout Adapter Name"
+            type="string"
+            constraints="layout|unique|nonempty"
+            default="adapter_main"
+            help="The name of the layout to create for the adapter"/>
+
+    <!--<parameter
+        id="fragmentLayoutName"
+        name="Fragment Layout Name"
+        type="string"
+        constraints="layout|unique|nonempty"
+        suggest="fragment_${classToResource(activityClass)}"
+        default="fragment_main"
+        help="The name of the layout to create for the activity's content fragment" />-->
+
+    <parameter
+            id="activityTitle"
+            name="Title"
+            type="string"
+            constraints="nonempty"
+            default="MainActivity"
+            suggest="${activityClass}"
+            help="The name of the activity. For launcher activities, the application title."/>
+
+    <!--<parameter
+        id="menuName"
+        name="Menu Resource Name"
+        type="string"
+        constraints="layout|unique|nonempty"
+        suggest="menu_${classToResource(activityClass)}"
+        default="menu_main"
+        help="The name of the resource file to create for the menu items" />-->
+
+    <parameter
+            id="isLauncher"
+            name="Launcher Activity"
+            type="boolean"
+            default="false"
+            help="If true, this activity will have a CATEGORY_LAUNCHER intent filter, making it visible in the launcher"/>
+
+    <parameter
+            id="parentActivityClass"
+            name="Hierarchical Parent"
+            type="string"
+            constraints="activity|exists|empty"
+            default=""
+            help="The hierarchical parent activity, used to provide a default implementation for the 'Up' button"/>
+
+    <parameter
+            id="features"
+            name="RecyclerView Style"
+            type="enum"
+            default="pager"
+            help="Additional features to include, such as a text-only, avatar with text, ..etc">
+        <option id="TextOnly">Text only</option>
+        <option id="IconText">Icon with text</option>
+        <option id="AvatarText">Avatar with text</option>
+        <option id="AvatarWithTextAndIcon">Avatar with text and icon</option>
+
+    </parameter>
+
+    <parameter
+            id="packageName"
+            name="Package name"
+            type="string"
+            constraints="package"
+            default="com.mycompany.myapp"/>
+
+    <!-- 128x128 thumbnails relative to template.xml -->
+    <thumbs>
+        <!-- default thumbnail is required -->
+        <thumb>text_only.png</thumb>
+        <!-- attributes act as selectors based on chosen parameters -->
+        <thumb features="AvatarText">avatar_with_text.png</thumb>
+        <thumb features="IconText">icon_with_text.png</thumb>
+        <thumb features="TextOnly">text_only.png</thumb>
+        <thumb features="AvatarWithTextAndIcon">avatar_icon_text.png</thumb>
+
+    </thumbs>
+
+    <globals file="globals.xml.ftl"/>
+    <execute file="recipe.xml.ftl"/>
+
+</template>
